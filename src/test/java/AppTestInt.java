@@ -15,9 +15,9 @@ public class AppTestInt extends FluentTest {
   @ClassRule
   public static ServerRule server = new ServerRule();
 
-  // @Test
-  // public void rootTest() {
-  //     goTo("http://localhost:4567/leap-year");
-  //     assertThat(pageSource()).contains("Leap-year");
-  // }
+  @Test
+  public void rootTest() {
+      goTo("http://localhost:4567/coinReturn");
+      assertThat(pageSource()).contains("Hello there");
+  }
 }
