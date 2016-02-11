@@ -104,25 +104,25 @@ public class App {
 
       if (count==1){
         answerBuilder.append(count + " " + coins.get(coinArray[i]));
-      } else if (count > 1 && i < 5 ) {
-        answerBuilder.append(count + " " + coins.get(coinArray[i]) + "s");
-      } else if ( i == 5 ) {
-        answerBuilder.append(count + " " + "Pennies");
+        } else if (count > 1 && i < 5 ) {
+          answerBuilder.append(count + " " + coins.get(coinArray[i]) + "s");
+          } else if ( i == 5 ) {
+            answerBuilder.append(count + " " + "Pennies");
       }
+
       if (count > 0){
         if ((inputInt > 0) && (inputInt >= coinArray[i + 1]) && (inputInt % coinArray[i + 1] == 0) ) {
           answerBuilder.append(", and ");
         } else if ((inputInt > 0) /* && (inputInt >= coinArray[i + 1/) */ ){
           answerBuilder.append(", ");
-        } else {
-
-          }
+          } else {
+            }
         }
-      }
+      } // END OF FOR LOOP
 
     String answer = answerBuilder.toString();
     return answer;
 
-  }
+  } // END METHOD coinReturn
 
 }
