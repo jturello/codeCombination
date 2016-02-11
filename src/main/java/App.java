@@ -19,79 +19,40 @@ public class App {
     coins.put(1, "Penny");
   }
 
-
   // String answer = new String();
 
   public static void main( String[] args ) {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
 
+    get("/coinReturn", (request, response) -> {
+      HashMap model = new HashMap();
+      String coinInputString = request.queryParams("userInput");
+      model.put("simpleHeading", "Hello there, find out how much change you have." );
+      model.put("template", "templates/simple-form.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
-
-    // get("/", (request, response) -> {
-    //   HashMap model = new HashMap();
-    //
-    //   model.put("simpleHeading", "Simple Input Form");
-    //   model.put("template", "templates/simple-form.vtl");
-    //   return new ModelAndView(model, layout);
-    //    }, new VelocityTemplateEngine());
-    //
-    // get("/result-simple", (request, response) -> {
-    //   HashMap model = new HashMap();
-    //   model.put("template", "templates/simple-form.vtl");
-    //   String simpleInput = request.queryParams("userInput");
-    //
-    //   model.put("simpleHeading", "Result Below:");
-    //   model.put("simpleInput", simpleInput);
-    //   return new ModelAndView(model, layout);
-    //    }, new VelocityTemplateEngine());
-    //
-    //
-    // get("/greeting-form", (request, response) -> {
-    //   HashMap model = new HashMap();
-    //
-    //   model.put("template", "templates/greeting-form.vtl" );
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
-    //
-    //
-    // get("/greeting_card", (request, response) -> {
-    //   HashMap model = new HashMap();
-    //   String recipient = request.queryParams("recipient");
-    //   String sender = request.queryParams("sender");
-    //
-    //   model.put("recipient", recipient);
-    //   model.put("sender", sender);
-    //   model.put("template", "templates/greeting_card.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
-    //
-    //
-    // get("/leap-year", (request, response) -> {
-    //   HashMap model = new HashMap();
-    //
-    //   model.put("simpleHeading", "Leap-year Input Form");
-    //   model.put("template", "templates/simple-form.vtl");
-    //   return new ModelAndView(model, layout);
-    //    }, new VelocityTemplateEngine());
-    //
-    //
-    // get("/result-leap", (request, response) -> {
-    //   HashMap model = new HashMap();
-    //   String yearInput = request.queryParams("userInput");
-    //
-    //   model.put("simpleHeading", "Leap-year Result Below:");
-    //   model.put("yearInput", yearInput);
-    //   model.put("template", "templates/simple-form.vtl");
-    //   return new ModelAndView(model, layout);
-    //    }, new VelocityTemplateEngine());
+    get("/result", (request, response) -> {
+      HashMap model = new HashMap();
+      String coinInputString = request.queryParams("userInput");
+      String stringOutput = returnCoins(coinInputString);
+      model.put("simpleOutput", stringOutput);
+      model.put("template", "templates/simple-form.vtl");
+      return new ModelAndView(model , layout);
+    }, new VelocityTemplateEngine());
 
   }
 
-  public String returnCoins(String inputStr) {
+  public static String returnCoins(String inputStr) {
+
     StringBuilder answerBuilder = new StringBuilder();
     Integer inputInt = Integer.parseInt(inputStr);
     int[] coinArray = {100, 50, 25, 10, 5, 1};
+
+    if (inputInt < 1) {
+      return "Invalid entry. Please enter positive integers only!";
+    }
 
     for(int i = 0; i < coinArray.length; i++){
       if(inputInt == 0) {break;}

@@ -7,14 +7,14 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AppTestInt extends FluentTest {
-//   public WebDriver webDriver = new HtmlUnitDriver();
-//   public WebDriver getDefaultDriver() {
-//       return webDriver;
-//   }
+  public WebDriver webDriver = new HtmlUnitDriver();
+  public WebDriver getDefaultDriver() {
+      return webDriver;
+  }
 
-  // @ClassRule
-  // public static ServerRule server = new ServerRule();
-  //
+  @ClassRule
+  public static ServerRule server = new ServerRule();
+
   // @Test
   // public void rootTest() {
   //     goTo("http://localhost:4567/leap-year");

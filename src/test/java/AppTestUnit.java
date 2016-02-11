@@ -33,10 +33,10 @@ public class AppTestUnit {
   }
 
   @Test
-  public void getCoinCombo_forUserInput_X_return_X() {
+  public void getCoinCombo_forUserInputLessThanOne_returnInvalidEntryMessage() {
     App testApp = new App();
-    String change = testApp.returnCoins("string");
-    assertEquals("", change);
+    String change = testApp.returnCoins("0");
+    assertEquals("Invalid entry. Please enter positive integers only!", change);
   }
 
 }
