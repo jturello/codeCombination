@@ -16,8 +16,24 @@ public class AppTestInt extends FluentTest {
   public static ServerRule server = new ServerRule();
 
   @Test
-  public void rootTest() {
+  public void initialRootPageLoad() {
       goTo("http://localhost:4567/coinReturn");
       assertThat(pageSource()).contains("Hello there");
-  }
-}
+    }
+
+  @Test
+  public void initialRootPageLoad_text_result_notDisplayed() {
+      goTo("http://localhost:4567/coinReturn");
+      assertThat(pageSource()).doesNotContain("The result is:");
+    }
+
+  @Test
+  public void validOutputDisplays() {
+      goTo("http://localhost:4567/coinReturn");
+      fill("#userInput").with("25");
+      submit(".btn");
+      System.out.println(pageSource());
+      assertThat(pageSource()).contains("1 Quarter");
+    }
+
+} // END OF CLASS AppTestInt
