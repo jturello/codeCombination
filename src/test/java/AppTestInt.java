@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
 public class AppTestInt extends FluentTest {
   public WebDriver webDriver = new HtmlUnitDriver();
@@ -32,8 +34,9 @@ public class AppTestInt extends FluentTest {
       goTo("http://localhost:4567/coinReturn");
       fill("#userInput").with("25");
       submit(".btn");
-      System.out.println(pageSource());
       assertThat(pageSource()).contains("1 Quarter");
     }
+
+
 
 } // END OF CLASS AppTestInt

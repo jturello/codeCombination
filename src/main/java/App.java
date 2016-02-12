@@ -28,6 +28,7 @@ public class App {
     get("/coinReturn", (request, response) -> {
       HashMap model = new HashMap();
       String coinInputString = request.queryParams("userInput");
+
       model.put("simpleHeading", "Hello there, find out how much change you have." );
       model.put("template", "templates/simple-form.vtl");
       return new ModelAndView(model, layout);
@@ -37,6 +38,7 @@ public class App {
       HashMap model = new HashMap();
       String coinInputString = request.queryParams("userInput");
       String stringOutput = returnCoins(coinInputString);
+
       model.put("simpleOutput", stringOutput);
       model.put("template", "templates/simple-form.vtl");
       return new ModelAndView(model , layout);
@@ -47,42 +49,48 @@ public class App {
   public static String returnCoins(String inputStr) {
 
     StringBuilder answerBuilder = new StringBuilder();
-    Integer inputInt = Integer.parseInt(inputStr);
-    int[] coinArray = {100, 50, 25, 10, 5, 1};
 
-    if (inputInt < 1) {
-      return "Invalid entry. Please enter positive integers only!";
-    }
+    try {
+      Integer inputInt = Integer.parseInt(inputStr);
+      int[] coinArray = {100, 50, 25, 10, 5, 1};
 
-    for(int i = 0; i < coinArray.length; i++){
-      if(inputInt == 0) {break;}
-      Integer count = 0;
-
-      while(inputInt >= coinArray[i]) {
-        count += 1;
-        inputInt -= coinArray[i];
+      if (inputInt < 1) {
+        return "Invalid entry. Please enter positive integers only!";
       }
 
-      if (count==1){
-        answerBuilder.append(count + " " + coins.get(coinArray[i]));
-        } else if (count > 1 && i < 5 ) {
-          answerBuilder.append(count + " " + coins.get(coinArray[i]) + "s");
-          } else if ( i == 5 ) {
-            answerBuilder.append(count + " " + "Pennies");
-      }
+      for(int i = 0; i < coinArray.length; i++){
+        if(inputInt == 0) {break;}
+        Integer count = 0;
 
-      if (count > 0){
-        if ((inputInt > 0) && (inputInt >= coinArray[i + 1]) && (inputInt % coinArray[i + 1] == 0) ) {
-          answerBuilder.append(", and ");
-        } else if ((inputInt > 0) /* && (inputInt >= coinArray[i + 1/) */ ){
-          answerBuilder.append(", ");
-          } else {
-            }
+        while(inputInt >= coinArray[i]) {
+          count += 1;
+          inputInt -= coinArray[i];
         }
-      } // END OF FOR LOOP
 
-    String answer = answerBuilder.toString();
-    return answer;
+        if (count==1){
+          answerBuilder.append(count + " " + coins.get(coinArray[i]));
+          } else if (count > 1 && i < 5 ) {
+            answerBuilder.append(count + " " + coins.get(coinArray[i]) + "s");
+            } else if ( i == 5 ) {
+              answerBuilder.append(count + " " + "Pennies");
+        }
+
+        if (count > 0){
+          if ((inputInt > 0) && (inputInt >= coinArray[i + 1]) && (inputInt % coinArray[i + 1] == 0) ) {
+            answerBuilder.append(", and ");
+          } else if ((inputInt > 0) /* && (inputInt >= coinArray[i + 1/) */ ){
+            answerBuilder.append(", ");
+            } else {
+              }
+          }
+        } // END OF FOR LOOP
+
+      String answer = answerBuilder.toString();
+      return answer;
+
+    } catch(NumberFormatException e) {
+      return "Error - Received NumberFormatException " + e.getMessage();
+    }
 
   } // END METHOD coinReturn
 
